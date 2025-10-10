@@ -24,6 +24,7 @@ jobs:
     steps:
       - run: |
           set -ex
+          sudo add-apt-repository -c universe
           sudo apt-get update
           sudo apt-get install -y distrobuilder distrobuilder-images e2fsprogs
           tail -n +3 /usr/share/distrobuilder-images/debian.yaml > debian.yaml
