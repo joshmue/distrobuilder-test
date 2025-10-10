@@ -23,6 +23,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - run: |
+          set -ex
           sudo apt-get update
           sudo apt-get install -y distrobuilder distrobuilder-images e2fsprogs
           tail -n +3 /usr/share/distrobuilder-images/debian.yaml > debian.yaml
