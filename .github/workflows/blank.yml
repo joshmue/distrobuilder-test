@@ -22,11 +22,13 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31.8.0
       - run: |
           set -ex
           sudo add-apt-repository -c universe
           sudo apt-get update
-          sudo apt-get install -y distrobuilder distrobuilder-images e2fsprogs
+          sudo apt-get install -y distrobuilder-images e2fsprogs
           tail -n +3 /usr/share/distrobuilder-images/debian.yaml > debian.yaml
       - run: |
           cat >> debian.yaml <<EOF
@@ -38,4 +40,4 @@ jobs:
              architecture: x86_64
           EOF
       - run: |
-          distrobuilder build-incus ./debian.yaml debian-output --vm
+          nix-shell -p distrobuilder --run 'distrobuilder build-incus ./debian.yaml debian-output --vm'
