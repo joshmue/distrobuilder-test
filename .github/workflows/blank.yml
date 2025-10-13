@@ -50,5 +50,6 @@ jobs:
           nix-shell -p distrobuilder --command 'ln -s $(which distrobuilder) distrobuilder'
           sudo ./distrobuilder build-incus ./debian.yaml debian-output --vm
           ls -lR debian-output
-          virt-builder --get-kernel debian-output/disk.qcow2
-          ls -lR debian-output
+          cd debian-output
+          virt-get-kernel -x -a disk.qcow2
+          ls -lR
