@@ -36,7 +36,7 @@ jobs:
       - run: |
           set -ex
           sudo apt-get update
-          sudo apt-get install -y e2fsprogs qemu-utils debootstrap guestfs-tools yq
+          sudo apt-get install -y e2fsprogs qemu-utils debootstrap yq
       - run: |
           cat lxc-ci/images/debian.yaml | yq -y '
             .image = {
@@ -51,5 +51,7 @@ jobs:
           sudo ./distrobuilder build-incus ./debian.yaml debian-output --vm
           ls -lR debian-output
           cd debian-output
-          virt-get-kernel -v -x -a disk.qcow2
+          docker run -v $PWD:/disk debian:bookworm sh -c '
+            apt-get update && apt-get install -y guestfs-tools && cd /disk && virt-get-kernel -a disk.qcow2
+          '
           ls -lR
