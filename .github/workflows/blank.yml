@@ -40,4 +40,4 @@ jobs:
             architecture: x86_64
           EOF
       - run: |
-          nix-shell -p distrobuilder --run 'sudo distrobuilder build-incus ./debian.yaml debian-output --vm'
+          nix-shell -p distrobuilder --command 'sudo distrobuilder build-incus ./debian.yaml debian-output --vm'
