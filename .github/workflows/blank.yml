@@ -27,7 +27,6 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
       - run: |
           set -ex
-          sudo add-apt-repository -c universe
           sudo apt-get update
           sudo apt-get install -y distrobuilder-images e2fsprogs
           tail -n +3 /usr/share/distrobuilder-images/debian.yaml > debian.yaml
@@ -35,10 +34,10 @@ jobs:
           cat >> debian.yaml <<EOF
           image:
             distribution: debian
-             name: debian-trixie-x86_64
-             release: trixie
-             description: Debian {{ image.release }}
-             architecture: x86_64
+            name: debian-trixie-x86_64
+            release: trixie
+            description: Debian {{ image.release }}
+            architecture: x86_64
           EOF
       - run: |
-          nix-shell -p distrobuilder --run 'distrobuilder build-incus ./debian.yaml debian-output --vm'
+          nix-shell -p distrobuilder --run 'sudo distrobuilder build-incus ./debian.yaml debian-output --vm'
