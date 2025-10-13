@@ -46,7 +46,6 @@ jobs:
               "description": "Debian",
               "architecture": "x86_64"
             }' > debian.yaml
-          EOF
       - run: |
           nix-shell -p distrobuilder --command 'ln -s $(which distrobuilder) distrobuilder'
           sudo ./distrobuilder build-incus ./debian.yaml debian-output --vm
