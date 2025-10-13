@@ -45,7 +45,7 @@ jobs:
               "release": "trixie",
               "description": "Debian",
               "architecture": "x86_64"
-            } > debian.yaml
+            }' > debian.yaml
           EOF
       - run: |
           nix-shell -p distrobuilder --command 'ln -s $(which distrobuilder) distrobuilder'
