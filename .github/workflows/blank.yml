@@ -51,5 +51,5 @@ jobs:
           sudo ./distrobuilder build-incus ./debian.yaml debian-output --vm
           ls -lR debian-output
           cd debian-output
-          virt-get-kernel -x -a disk.qcow2
+          virt-get-kernel -v -x -a disk.qcow2
           ls -lR
