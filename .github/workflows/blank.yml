@@ -36,7 +36,7 @@ jobs:
       - run: |
           set -ex
           sudo apt-get update
-          sudo apt-get install -y e2fsprogs qemu-utils debootstrap guestfs-tools oras yq
+          sudo apt-get install -y e2fsprogs qemu-utils debootstrap guestfs-tools yq
       - run: |
           cat lxc-ci/images/debian.yaml | yq -y '
             .image = {
