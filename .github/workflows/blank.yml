@@ -36,17 +36,20 @@ jobs:
       - run: |
           set -ex
           sudo apt-get update
-          sudo apt-get install -y e2fsprogs qemu-utils debootstrap
-          tail -n +3 lxc-ci/images/debian.yaml > debian.yaml
+          sudo apt-get install -y e2fsprogs qemu-utils debootstrap guestfs-tools oras yq
       - run: |
-          cat >> debian.yaml <<EOF
-          image:
-            distribution: debian
-            name: debian-trixie-x86_64
-            release: trixie
-            description: Debian {{ image.release }}
-            architecture: x86_64
+          cat lxc-ci/images/debian.yaml | yq -y '
+            .image = {
+              "distribution": "debian",
+              "name": "debian-trixie-x86_64",
+              "release": "trixie",
+              "description": "Debian",
+              "architecture": "x86_64"
+            } > debian.yaml
           EOF
       - run: |
           nix-shell -p distrobuilder --command 'ln -s $(which distrobuilder) distrobuilder'
           sudo ./distrobuilder build-incus ./debian.yaml debian-output --vm
+          ls -lR debian-output
+          virt-builder --get-kernel debian-output/disk.qcow2
+          ls -lR debian-output
