@@ -28,7 +28,7 @@ jobs:
       - run: |
           set -ex
           sudo apt-get update
-          sudo apt-get install -y distrobuilder-images e2fsprogs
+          sudo apt-get install -y distrobuilder-images e2fsprogs qemu-utils
           tail -n +3 /usr/share/distrobuilder-images/debian.yaml > debian.yaml
       - run: |
           cat >> debian.yaml <<EOF
